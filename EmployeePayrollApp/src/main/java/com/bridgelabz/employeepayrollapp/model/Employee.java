@@ -18,7 +18,10 @@ public class Employee {
     public Employee() {}
 
     public Employee(EmployeeDTO employeeDTO) {
-        this.name = employeeDTO.name;
-        this.salary = employeeDTO.salary;
+        this.name = employeeDTO.getName();   // Use getter instead of direct field access
+        this.salary = (long) employeeDTO.getSalary();
     }
+
+
+
 }

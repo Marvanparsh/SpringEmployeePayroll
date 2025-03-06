@@ -28,20 +28,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getEmployeeById(Long id) {
         return employeeRepository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + id));
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with ID: " + id));
     }
 
     @Override
     public Employee updateEmployee(Long id, EmployeeDTO employeeDTO) {
-        Employee employee = getEmployeeById(id);
-        employee.setName(employeeDTO.name);
-        employee.setSalary(employeeDTO.salary);
-        return employeeRepository.save(employee);
+        Employee existingEmployee = getEmployeeById(id);
+        existingEmployee.setName(employeeDTO.getName());
+        existingEmployee.setSalary(employeeDTO.getSalary());
+        return employeeRepository.save(existingEmployee);
     }
 
     @Override
     public void deleteEmployee(Long id) {
-        Employee employee = getEmployeeById(id);
-        employeeRepository.delete(employee);
+        Employee existingEmployee = getEmployeeById(id);
+        employeeRepository.delete(existingEmployee);
     }
 }
