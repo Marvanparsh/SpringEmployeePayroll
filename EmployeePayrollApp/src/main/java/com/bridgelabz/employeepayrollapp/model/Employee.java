@@ -1,10 +1,11 @@
 package com.bridgelabz.employeepayrollapp.model;
 
+import com.bridgelabz.employeepayrollapp.dto.EmployeeDTO;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
-@Data
 @Entity
+@Data
 @Table(name = "employee_payroll")
 public class Employee {
     @Id
@@ -12,6 +13,12 @@ public class Employee {
     private Long id;
 
     private String name;
-    private String department;
-    private double salary;
+    private long salary;
+
+    public Employee() {}
+
+    public Employee(EmployeeDTO employeeDTO) {
+        this.name = employeeDTO.name;
+        this.salary = employeeDTO.salary;
+    }
 }

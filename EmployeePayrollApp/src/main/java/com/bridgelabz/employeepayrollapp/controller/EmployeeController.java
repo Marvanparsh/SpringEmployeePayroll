@@ -1,20 +1,27 @@
 package com.bridgelabz.employeepayrollapp.controller;
 
+import com.bridgelabz.employeepayrollapp.dto.EmployeeDTO;
 import com.bridgelabz.employeepayrollapp.model.Employee;
 import com.bridgelabz.employeepayrollapp.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/employeepayrollservice")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping
+    @PostMapping("/add")
+    public Employee addEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
+        return employeeService.addEmployee(employeeDTO);
+    }
+
+    @GetMapping("/all")
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
@@ -24,18 +31,14 @@ public class EmployeeController {
         return employeeService.getEmployeeById(id);
     }
 
-    @PostMapping
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.addEmployee(employee);
+    @PutMapping("/update/{id}")
+    public Employee updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDTO employeeDTO) {
+        return employeeService.updateEmployee(id, employeeDTO);
     }
 
-    @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
-        return employeeService.updateEmployee(id, updatedEmployee);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteEmployee(@PathVariable Long id) {
+    @DeleteMapping("/delete/{id}")
+    public String deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
+        return "Employee deleted successfully!";
     }
 }
